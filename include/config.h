@@ -22,4 +22,7 @@
 // Debug Build
 #define DEBUG
 
+// POW Build WIP i think
+//#define POWBUILD
+
 #endif // CONFIG_H
