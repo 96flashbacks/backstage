@@ -34,7 +34,7 @@
 
 u32 unused80339F10;
 u8 unused80339F1C[20];
-
+int gIsLuigi;
 /**************************************************
  *                    ANIMATIONS                  *
  **************************************************/
@@ -1219,6 +1219,22 @@ void update_mario_button_inputs(struct MarioState *m) {
         m->framesSinceB = 0;
     } else if (m->framesSinceB < 0xFF) {
         m->framesSinceB++;
+    }
+
+    if (gPlayer1Controller->buttonPressed & L_TRIG) {
+        play_sound(SOUND_MENU_STAR_SOUND, gGlobalSoundSource);
+        m->particleFlags |= PARTICLE_MIST_CIRCLE;
+        if (gIsLuigi == FALSE) {
+            gIsLuigi = TRUE;
+        } else {
+            gIsLuigi = FALSE;
+        }
+    }
+
+    if (gIsLuigi == FALSE) {
+        m->marioObj->header.gfx.sharedChild = gLoadedGraphNodes[MODEL_MARIO];
+    } else {
+        m->marioObj->header.gfx.sharedChild = gLoadedGraphNodes[MODEL_LUIGI]; 
     }
 }
 

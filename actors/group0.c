@@ -8,6 +8,7 @@
 
 // Note: This bin does not use bin IDs, unlike the other segmented bins.
 #include "mario/gfx_mario.sou"
+#include "luigi/gfx_luigi.sou"
 
 #include "bubble/model.inc.c"
 
