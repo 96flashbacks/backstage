@@ -267,6 +267,7 @@ SECTIONS
         BUILD_DIR/libultra.a:__osGetCause.o(.text);
         BUILD_DIR/libultra.a:__osAtomicDec.o(.text);
         BUILD_DIR/libultra.a:guLookAtRef.o(.text); /* Fast3DEX2 only */
+        BUILD_DIR/libultra.a:osSyncPrintf.o(.text);
         BUILD_DIR/lib/rsp.o(.text);
 
         /* data */
@@ -693,6 +694,7 @@ SECTIONS
     SZP_SEG(outside, 0x09000000)
     SZP_SEG(inside, 0x09000000)
     SZP_SEG(effect, 0x0B000000)
+    SZP_SEG(grass, 0x09000000)
 
 #define STUB_LEVEL(_0, _1, _2, _3, _4, _5, _6, _7, _8)
 #define DEFINE_LEVEL(_0, _1, _2, folder, _4, _5, _6, _7, _8, _9, _10) STANDARD_LEVEL(folder)
