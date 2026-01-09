@@ -1,9 +1,9 @@
-# showfloor
-![showfloorlogo](https://github.com/user-attachments/assets/255078c5-d31c-4284-a720-f1f2ddcefd4f)
+# backstage
+![backstagelogo](https://github.com/user-attachments/assets/255078c5-d31c-4284-a720-f1f2ddcefd4f)
 
 ## Introduction
 
-**showfloor** is a recreation of the Shoshinkai 1995 demo of Super Mario 64, based on [The Preservation Project](https://github.com/Sunlitspace542/tpp-mirror) (TPP). It aims to continue TPP's legacy with greater accuracy to the source material.
+**backstage** is a recreation of the Pre SSK Build (B-Roll Era) of Super Mario 64, based on [The Preservation Project](https://github.com/Sunlitspace542/tpp-mirror) (TPP). It aims to continue TPP's legacy with greater accuracy to the source material.
 
 ## Installation
 
@@ -13,8 +13,8 @@ Follow their [README](https://github.com/n64decomp/sm64/blob/master/README.md#in
 Clone and build:
 
 ```sh
-git clone https://github.com/96flashbacks/showfloor.git
-cd showfloor
+git clone https://github.com/96flashbacks/backstage.git
+cd backstage
 make
 ```
 
