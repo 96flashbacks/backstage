@@ -72,7 +72,7 @@ const LevelScript level_ttm_entry[] = {
     END_AREA(),
 
     FREE_LEVEL_POOL(),
-    MARIO_POS(/*area*/ 1, /*yaw*/ 45, /*pos*/ 102, -4332, 5734),
+    MARIO_POS(/*area*/ 1, /*yaw*/ 45, /*pos*/ 102, -4332,  5734),
     CALL(/*arg*/ 0, /*func*/ lvl_init_or_update),
     CALL_LOOP(/*arg*/ 1, /*func*/ lvl_init_or_update),
     CLEAR_LEVEL(),
