@@ -1,13 +1,12 @@
 /* ===============================================================================
         : Hms data of Dokan.
 ================================================================================== */
-extern Gfx gfx_dokanA[];
-extern Gfx gfx_dokanB[];
+extern Gfx RCP_dokan[];
 
 Hierarchy RCP_HmsDokan[] = {
     hmsHeader(350)
 	hmsBegin()
-		hmsGfx(RM_SURF, gfx_dokanA)
+		hmsGfx(RM_SURF, RCP_dokan)
 	hmsEnd()
     hmsExit()
 };
