@@ -17,7 +17,7 @@ UNUSED static const u64 binid_1 = 1;
 UNUSED static const u64 binid_3 = 3;
 
 #include "warp_pipe/dokan.sou"
-#include "warp_pipe/dokan.flk"
+#include "warp_pipe/collision.inc.c"
 UNUSED static const u64 binid_4 = 4;
 
 #include "door/door.sou"
