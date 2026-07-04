@@ -18,6 +18,13 @@ static const Gfx mat_castle_inside_WallBottomMaterial[] = {
 	gsSPEndDisplayList(),
 };
 
+Gfx mat_revert_castle_inside_WallBottomMaterial[] = {
+	gsDPPipeSync(),
+	gsDPSetAlphaDither(G_AD_DISABLE),
+	gsSPEndDisplayList(),
+};
+
+
 static const Gfx mat_castle_inside_CarpetMaterial[] = {
 	gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB),

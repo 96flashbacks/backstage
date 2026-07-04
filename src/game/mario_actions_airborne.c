@@ -519,19 +519,19 @@ s32 act_twirling(struct MarioState *m) {
         yawVelTarget = 0x1800;
     }
 
-    m->angleVel[1] = approach_s32(m->angleVel[1], yawVelTarget, 0x180, 0x200);
-    m->twirlYaw += m->angleVel[1];
-
     switch (m->actionArg) {
         case 0:
+        m->angleVel[1] = approach_s32(m->angleVel[1], 0x1040, 0x340, 0x200);  
             set_mario_animation(m, MARIO_ANIM_DOUBLE_JUMP_RISE);
             play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, SOUND_MARIO_YAHOO);
             if (m->vel[1] < 0.0f) {
                 m->actionArg = 1;
+                m->angleVel[1] += 0x460;
             }
             break;
 
         case 1:
+        m->angleVel[1] = approach_s32(m->angleVel[1], yawVelTarget, 0x200, 0x200);
             set_mario_animation(m, MARIO_ANIM_START_TWIRL);
             if (is_anim_past_end(m)) {
                 m->actionArg = 2;
@@ -539,9 +539,12 @@ s32 act_twirling(struct MarioState *m) {
             break;
 
         case 2:
+        m->angleVel[1] = approach_s32(m->angleVel[1], yawVelTarget, 0x200, 0x200);  
             set_mario_animation(m, MARIO_ANIM_TWIRL);
             break;
     }
+
+    m->twirlYaw += m->angleVel[1];
 
     if (startTwirlYaw > m->twirlYaw) {
         play_sound(SOUND_ACTION_TWIRL, m->marioObj->header.gfx.cameraToObject);

@@ -904,12 +904,12 @@ void radial_camera_move(struct Camera *c) {
         } else {
             // sModeOffsetYaw only updates when mario is moving
             if (c->mode == CAMERA_MODE_RADIAL) {
-                rotateSpeed = 0x80;
+                rotateSpeed = 150;
                 if (gCameraMovementFlags & CAM_FLAG_SPAWN) {
                     if (gCurrLevelArea == AREA_CCM_OUTSIDE) { 
                         rotateSpeed = 0xA8;
                     } else if (gCurrLevelNum == LEVEL_WF) {
-                        rotateSpeed = 0x3A;
+                        rotateSpeed = 0x38;
                     } else if (gCurrLevelNum == LEVEL_LLL) {
                         rotateSpeed = 0x10;
                     } else if (gCurrLevelNum == LEVEL_DDD) {
@@ -917,7 +917,7 @@ void radial_camera_move(struct Camera *c) {
                     }
                 }
                 // turning logic, i
-                if (gMarioStates->forwardVel != 0) {
+                if ((gMarioStates->forwardVel != 0)) {
                     if (turnYaw < 0) {
                         camera_approach_s16_symmetric_bool(&sModeOffsetYaw, maxAreaYaw, absf(sins(turnYaw) * rotateSpeed));
                     } else if (turnYaw > 0) { 
@@ -1624,7 +1624,7 @@ s16 update_slide_camera(struct Camera *c) {
     s16 goalPitch = 0x1555;
     s16 goalYaw = sMarioCamState->faceAngle[1] + DEGREES(180);
 
-    //sLakituDist = approach_f32(sLakituDist, 0.f, 20.f, 20.f);
+    sLakituDist = approach_f32(sLakituDist, 0.f, 20.f, 20.f);
 
     // Focus on Mario
     vec3f_copy(c->focus, sMarioCamState->pos);
@@ -6423,34 +6423,43 @@ BAD_RETURN(s32) cutscene_door_move_behind_mario(struct Camera *c) {
     determine_pushing_or_pulling_door(&doorRotation);
     set_focus_rel_mario(c, 0.f, 125.f, 0.f, 0);
     vec3s_set(sCutsceneVars[0].angle, 0, sMarioCamState->faceAngle[1] + doorRotation, 0);
-    vec3f_set(camOffset, 0.f, 125.f, 250.f);
+   
+
+    // set position offset - [0] is in/out, [2] is side to side
+    vec3f_set(camOffset, 0.f, 30.f, 250.f);
 
     if (doorRotation == 0) { // pulling door
-        camOffset[0] = 125.f;
-        camOffset[1] = 30.f;
-        camOffset[2] = 240.f; // used to be 280.f
-    } else {                  // pushing door
-        camOffset[0] = -85.f;
-        camOffset[1] = 30.f;
+        vec3f_set(camOffset, 150.f, 30.f, 250.f);
+    } else {                 // pushing door
+        camOffset[0] = -90.f;
+        vec3f_set(camOffset, -90.f, 30.f, 250.f);
     }
     offset_rotated(c->pos, sMarioCamState->pos, camOffset, sCutsceneVars[0].angle);
+    sCutsceneVars[2].point[0] = camOffset[0];
+    sCutsceneVars[2].point[1] = camOffset[1];
+    sCutsceneVars[2].point[2] = camOffset[2];
 }
 
 /**
  * Follow mario through the door.
  */
 BAD_RETURN(s32) cutscene_door_follow_mario(struct Camera *c) {
-    s16 pitch, yaw;
-    f32 dist;
+Vec3f camOffset;
 
-    set_focus_rel_mario(c, 0.f, 125.f, 0.f, 0.f);
-    vec3f_get_dist_and_angle(c->focus, c->pos, &dist, &pitch, &yaw);
+    set_focus_rel_mario(c, 0.f, 125.f, 0.f, 0);
 
-    camera_approach_f32_symmetric_bool(&dist, 215.f, 14.f);
-    camera_approach_s16_symmetric_bool(&pitch, 0, 128.f);
-    // camera_approach_s16_symmetric_bool(&yaw, 0, 16);
+    // changing the offset instead of changing pitch/dist
+    // gives a much closer result - editing these is much simpler too
+    camera_approach_f32_symmetric_bool(&sCutsceneVars[2].point[0], 0.f, 1.8f);
+    camera_approach_f32_symmetric_bool(&sCutsceneVars[2].point[1], 125.f, 5.f);
+    camera_approach_f32_symmetric_bool(&sCutsceneVars[2].point[2], 0.f, 1.6f);
 
-    vec3f_set_dist_and_angle(c->focus, c->pos, dist, pitch, yaw);
+
+    // set new offset after approach
+    vec3f_set(camOffset, sCutsceneVars[2].point[0], sCutsceneVars[2].point[1], sCutsceneVars[2].point[2]);
+
+    // apply the offset relative to mario's rotation, like in the previous function
+    offset_rotated(c->pos, sMarioCamState->pos, camOffset, sCutsceneVars[0].angle);
 }
 
 /**
