@@ -1,4 +1,20 @@
 // chuckya.inc.c
+
+// this was used in my port of backstage to new showfloor, uncomment the code below if the game doesn't compile
+/*Gfx *geo_update_held_mario_pos(s32 run, UNUSED struct GraphNode *node, Mat4 mtx) {
+    if (run == TRUE) {
+        Mat4 sp20;
+        struct Object *obj = (struct Object *) gCurGraphNodeObject;
+        if (obj->prevObj != NULL) {
+            create_transformation_from_matrices(sp20, mtx, *gCurGraphNodeCamera->matrixPtr);
+            obj_update_pos_from_parent_transformation(sp20, obj->prevObj);
+            obj_set_gfx_pos_from_pos(obj->prevObj);
+        }
+    }
+
+    return NULL;
+}*/
+
     s32 update_angle_from_move_flags(s32 *angle) {
     if (o->oMoveFlags & OBJ_MOVE_HIT_WALL) {
         *angle = o->oWallAngle;
