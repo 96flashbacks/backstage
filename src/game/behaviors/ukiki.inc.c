@@ -1,37 +1,7 @@
 
 /**
  * @file Contains behavior for the ukiki objects.
- *
- * Cap ukiki is the ukiki that steals Mario's cap.
- * Cage ukiki is the ukiki that triggers the cage star.
  */
-
-void ukiki_held_loop(void) {
-    o->header.gfx.node.flags |= GRAPH_RENDER_INVISIBLE;
-    cur_obj_init_animation(2); // broken
-    cur_obj_set_pos_relative(gMarioObject, 0, 60.0f, 100.0f);
-    cur_obj_become_intangible();
-}
-
-
-
-/**
- * Unused copy of geo_update_projectile_pos_from_parent. Perhaps a copy paste mistake.
- */
-Gfx *geo_update_projectile_pos_from_parent_copy(s32 run,UNUSED struct GraphNode *node, Mat4 mtx) {
-    if (run == TRUE) {
-        Mat4 mtx2;
-        struct Object *obj = (struct Object *) gCurGraphNodeObject; // TODO: change global type to Object pointer
-
-        if (obj->prevObj != NULL) {
-            create_transformation_from_matrices(mtx2, mtx, *gCurGraphNodeCamera->matrixPtr);
-            obj_update_pos_from_parent_transformation(mtx2, obj->prevObj);
-            obj_set_gfx_pos_from_pos(obj->prevObj);
-        }
-    }
-
-    return NULL;
-}
 
 /**
  * Chooses random idle taunts and loops them a random number of times.
@@ -99,8 +69,6 @@ void idle_ukiki_taunt(void) {
  */
 void ukiki_act_idle(void) {
     idle_ukiki_taunt();
-
-    
         if (o->oDistanceToMario > 700.0f && o->oDistanceToMario < 1000.0f) {
             o->oAction = UKIKI_ACT_RUN;
         } else if (o->oDistanceToMario <= 700.0f && o->oDistanceToMario > 200.0f) {
@@ -108,7 +76,9 @@ void ukiki_act_idle(void) {
                 o->oAction = UKIKI_ACT_TURN_TO_MARIO;
             }
         }
-
+     else if (o->oDistanceToMario < 300.0f) {
+        o->oAction = UKIKI_ACT_RUN;
+    }
 
     // Jump away from Mario after stealing his cap.
     if (o->oUkikiTextState == UKIKI_TEXT_STOLE_CAP) {
@@ -131,20 +101,14 @@ void ukiki_act_idle(void) {
 
         o->oUkikiTextState = UKIKI_TEXT_HAS_CAP;
     }
-
-    if (o->oBhvParams2ndByte == UKIKI_BP_CAP) {
-        if (o->oPosY < -1550.0f) {
-            o->oAction = UKIKI_ACT_RETURN_HOME;
-        }
-    }
 }
+
 
 /**
  * Ukiki attempts to run home, which is often impossible depending on terrain.
  * Only used for the cap ukiki.
  */
 void ukiki_act_return_home(void) {
-    UNUSED u8 filler[4];
 
     cur_obj_init_animation_with_sound(UKIKI_ANIM_RUN);
     o->oMoveAngleYaw = cur_obj_angle_to_home();
@@ -202,11 +166,9 @@ void ukiki_act_turn_to_mario(void) {
         o->oAction = UKIKI_ACT_IDLE;
     }
 
-    
-        if (o->oDistanceToMario > 500.0f) {
-            o->oAction = UKIKI_ACT_RUN;
-
-}
+if (o->oDistanceToMario < 300.0f) {
+        o->oAction = UKIKI_ACT_RUN;
+    }
 }
 
 /**
@@ -215,8 +177,6 @@ void ukiki_act_turn_to_mario(void) {
 void ukiki_act_run(void) {
     s32 fleeMario = TRUE;
     s16 goalYaw = o->oAngleToMario + 0x8000;
-
-
 
     if (o->oTimer == 0) {
         o->oUkikiChaseFleeRange = random_float() * 100.0f + 350.0f;
@@ -278,32 +238,21 @@ void ukiki_act_jump(void) {
 }
 
 /**
- * Waypoints that lead from the top of the mountain to the cage.
- */
-
-
-/**
- * Travel to the cage, wait for Mario, jump to it, and ride it to
- * our death. Ukiki is a tad suicidal.
- */
-
-
-/**
  * A struct of Ukiki's sounds based on his current
  * SoundState number.
  */
 struct SoundState sUkikiSoundStates[] = {
-    {1, 1, 10, SOUND_OBJ_UKIKI_STEP_DEFAULT},
+    {0, 0, 0, NO_SOUND},
     {0, 0, 0,  NO_SOUND},
     {0, 0, 0,  NO_SOUND},
     {0, 0, 0,  NO_SOUND},
-    {1, 0, -1, SOUND_OBJ_UKIKI_CHATTER_SHORT},
-    {1, 0, -1, SOUND_OBJ_UKIKI_CHATTER_LONG},
+    {0, 0, 0, NO_SOUND},
+    {0, 0, 0, NO_SOUND},
     {0, 0, 0,  NO_SOUND},
     {0, 0, 0,  NO_SOUND},
-    {1, 0, -1, SOUND_OBJ_UKIKI_CHATTER_LONG},
-    {1, 0, -1, SOUND_OBJ_UKIKI_STEP_LEAVES},
-    {1, 0, -1, SOUND_OBJ_UKIKI_CHATTER_IDLE},
+    {0, 0, 0, NO_SOUND},
+    {0, 0, 0, NO_SOUND},
+    {0, 0, 0, NO_SOUND},
     {0, 0, 0,  NO_SOUND},
     {0, 0, 0,  NO_SOUND},
 };
@@ -345,47 +294,42 @@ void ukiki_free_loop(void) {
     }
 }
 
-/**
- * Unused function for timing ukiki's blinking.
- * Image still present in Ukiki's actor graphics.
- *
- * Possibly unused so AnimState could be used for wearing a cap?
- */
-UNUSED static void ukiki_blink_timer(void) {
-    if (gGlobalTimer % 50 < 7) {
-        o->oAnimState = UKIKI_ANIM_STATE_EYE_CLOSED;
-    } else {
-        o->oAnimState = UKIKI_ANIM_STATE_DEFAULT;
-    }
+void bhv_ukiki_held(void) {
+    o->header.gfx.node.flags |= GRAPH_RENDER_INVISIBLE;
+    cur_obj_set_pos_relative(gMarioObject, 0, 60.0f, 100.0f);
+    cur_obj_become_intangible();
+}
+
+void bhv_ukiki_dropped(void) {
+    cur_obj_get_dropped();
+    o->header.gfx.node.flags &= ~GRAPH_RENDER_INVISIBLE;
+    cur_obj_init_animation(0);
+    o->oHeldState = HELD_FREE;
+    cur_obj_become_tangible();
+    o->oForwardVel = 3.0f;
+    o->oAction = UKIKI_ACT_IDLE;
 }
 
 /**
-
  * The main behavior function for ukiki. Chooses which behavior to use
  * dependent on the held state and whick ukiki it is (cage or cap).
  */
 void bhv_ukiki_loop(void) {
     switch (o->oHeldState) {
         case HELD_FREE:
-            //! @bug (PARTIAL_UPDATE)
-            o->oUkikiTextboxTimer = 0;
             ukiki_free_loop();
             break;
 
         case HELD_HELD:
-            cur_obj_unrender_set_action_and_anim(UKIKI_ANIM_HELD, 0);
-            obj_copy_pos(o, gMarioObject);
-                ukiki_held_loop();
-
+         bhv_ukiki_held();
+        break;
         case HELD_THROWN:
         case HELD_DROPPED:
-            cur_obj_get_dropped();
+            bhv_ukiki_dropped();
             break;
     }
 
-
         o->oAnimState = UKIKI_ANIM_STATE_DEFAULT;
-    
 
     o->oInteractStatus = 0;
 

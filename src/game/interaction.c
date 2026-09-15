@@ -1172,7 +1172,6 @@ u32 check_object_grab_mario(struct MarioState *m, UNUSED u32 interactType, struc
             m->usedObj = o;
 
             update_mario_sound_and_camera(m);
-            play_sound(SOUND_MARIO_ATTACKED, m->marioObj->header.gfx.cameraToObject);
             return set_mario_action(m, ACT_GRABBED, 0);
         }
     }
