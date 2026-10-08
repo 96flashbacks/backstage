@@ -17,15 +17,11 @@
 #include "levels/thi/header.h"
 
 static const LevelScript script_func_local_4[] = {
+    LOAD_MODEL_FROM_GEO(MODEL_HANA,      RCP_HmsEnemyhana),
     OBJECT(/*model*/ MODEL_STAR,  /*pos*/   400, 4300, -1200,  /*angle*/ 0, 0, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvStar),
-    OBJECT(/*model*/ MODEL_STAR,  /*pos*/   -548, -2320, 6782, /*angle*/ 0, 0, 0, /*bhvParam*/ 0x01000000, /*bhv*/ bhvStar),
-    OBJECT(/*model*/ MODEL_STAR,  /*pos*/    410,  -511,  916, /*angle*/ 0, 0, 0, /*bhvParam*/ 0x01000000, /*bhv*/ bhvStar),
-    OBJECT(/*model*/ MODEL_CHUCKYA,  /*pos*/-1908, 2202, -595, /*angle*/ 0, 0, 0, /*bhvParam*/ 0x01000000, /*bhv*/ bhvChuckya),
-    OBJECT(/*model*/ MODEL_PIRANHA_PLANT,     /*pos*/  -6336, -2047, -3861, /*angle*/ 0, 0, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvPiranhaPlant),
-    OBJECT(/*model*/ MODEL_PIRANHA_PLANT,     /*pos*/  -5740, -2047, -6578, /*angle*/ 0, 0, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvPiranhaPlant),
-    OBJECT(/*model*/ MODEL_PIRANHA_PLANT,     /*pos*/  -6481, -2047, -5998, /*angle*/ 0, 0, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvPiranhaPlant),
-    OBJECT(/*model*/ MODEL_PIRANHA_PLANT,     /*pos*/  -5577, -2047, -4961, /*angle*/ 0, 0, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvPiranhaPlant),
-    OBJECT(/*model*/ MODEL_PIRANHA_PLANT,     /*pos*/  -6865, -2047, -4568, /*angle*/ 0, 0, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvPiranhaPlant),
+    OBJECT(/*model*/ MODEL_STAR,  /*pos*/   -1900, -900, 6800, /*angle*/ 0, 0, 0, /*bhvParam*/ 0x01000000, /*bhv*/ bhvStar),
+    OBJECT(/*model*/ MODEL_CHUCKYA,  /*pos*/   -1908, 2202, -595, /*angle*/ 0, 0, 0, /*bhvParam*/ 0x01000000, /*bhv*/ bhvChuckya),
+    OBJECT(/*model*/ MODEL_HANA,  /*pos*/   -6193, -2969, 6121, /*angle*/ 0, 0, 0, /*bhvParam*/ 0x01000000, /*bhv*/ bhvHana),
     RETURN(),
 };
 
@@ -44,7 +40,7 @@ const LevelScript level_thi_entry[] = {
     MARIO(/*model*/ MODEL_MARIO, /*bhvParam*/ BPARAM4(0x01), /*bhv*/ bhvMario),
     JUMP_LINK(script_func_global_1),
     JUMP_LINK(script_func_local_4),
-    JUMP_LINK(script_func_global_15),
+    //JUMP_LINK(script_func_global_15),
     //LOAD_MODEL_FROM_GEO(MODEL_THI_BUBBLY_TREE,     bubbly_tree_geo),
     LOAD_MODEL_FROM_GEO(MODEL_LEVEL_GEOMETRY_03,   thi_geo_0005F0),
     //LOAD_MODEL_FROM_GEO(MODEL_THI_WARP_PIPE,       warp_pipe_geo),
@@ -54,6 +50,8 @@ const LevelScript level_thi_entry[] = {
     AREA(/*index*/ 1, thi_geo_000608),
         OBJECT(/*model*/ MODEL_NONE, /*pos*/ -7372, -2969,  7373, /*angle*/ 0, 106, 0, /*bhvParam*/ BPARAM2(WARP_NODE_0A), /*bhv*/ bhvSpinAirborneWarp),
         OBJECT(/*model*/ MODEL_NONE, /*pos*/   410,  -512,   922, /*angle*/ 0,   0, 0, /*bhvParam*/ BPARAM2(WARP_NODE_0B), /*bhv*/ bhvInstantActiveWarp),
+        OBJECT(/*model*/ MODEL_NONE, /*pos*/   410,  -512,   717, /*angle*/ 0,   0, 0, /*bhvParam*/ BPARAM1(5)  | BPARAM2(WARP_NODE_0C), /*bhv*/ bhvWarp),
+        OBJECT(/*model*/ MODEL_NONE, /*pos*/     0,  3170, -1570, /*angle*/ 0,   0, 0, /*bhvParam*/ BPARAM1(10) | BPARAM2(WARP_NODE_0D), /*bhv*/ bhvWarp),
         WARP_NODE(/*id*/ WARP_NODE_0A,      /*destLevel*/ LEVEL_THI,    /*destArea*/ 1, /*destNode*/ WARP_NODE_0A, /*flags*/ WARP_NO_CHECKPOINT),
         WARP_NODE(/*id*/ WARP_NODE_0B,      /*destLevel*/ LEVEL_THI,    /*destArea*/ 1, /*destNode*/ WARP_NODE_0B, /*flags*/ WARP_NO_CHECKPOINT),
         WARP_NODE(/*id*/ WARP_NODE_0C,      /*destLevel*/ LEVEL_THI,    /*destArea*/ 3, /*destNode*/ WARP_NODE_0A, /*flags*/ WARP_NO_CHECKPOINT),
