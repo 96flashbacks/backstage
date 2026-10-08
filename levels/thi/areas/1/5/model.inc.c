@@ -44,3 +44,4 @@ Gfx big_world_5_dl_mesh[] = {
 	gsSPTexture(65535, 65535, 0, 0, 0),
 	gsSPEndDisplayList(),
 };
+
