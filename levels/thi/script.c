@@ -17,6 +17,7 @@
 #include "levels/thi/header.h"
 
 static const LevelScript script_func_local_4[] = {
+    LOAD_MODEL_FROM_GEO(MODEL_HANA,      RCP_HmsEnemyhana),
     OBJECT(/*model*/ MODEL_STAR,  /*pos*/   400, 4300, -1200,  /*angle*/ 0, 0, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvStar),
     OBJECT(/*model*/ MODEL_STAR,  /*pos*/   -548, -2320, 6782, /*angle*/ 0, 0, 0, /*bhvParam*/ 0x01000000, /*bhv*/ bhvStar),
     OBJECT(/*model*/ MODEL_CHUCKYA,  /*pos*/-1908, 2202, -595, /*angle*/ 0, 0, 0, /*bhvParam*/ 0x01000000, /*bhv*/ bhvChuckya),
@@ -30,6 +31,7 @@ static const LevelScript script_func_local_4[] = {
 
 static const LevelScript script_func_local_5[] = {
     OBJECT(/*model*/ MODEL_STAR,  /*pos*/   -10,  728, -3679,  /*angle*/ 0, 0, 0, /*bhvParam*/ 0x02000000, /*bhv*/ bhvStar),
+    OBJECT(/*model*/ MODEL_HANA,  /*pos*/ -2100,  664, -3500,  /*angle*/ 0, 0, 0, /*bhvParam*/ 0x01000000, /*bhv*/ bhvHana),
     RETURN(),
 };
 
@@ -77,8 +79,8 @@ const LevelScript level_thi_entry[] = {
     END_AREA(),
     
     AREA(/*index*/ 2, thi_geo_00079C),
-        OBJECT(/*model*/ MODEL_NONE, /*pos*/ 4506, 857, 4394, /*angle*/ 0, -90, 0, /*bhvParam*/ BPARAM2(WARP_NODE_0A), /*bhv*/ bhvInstantActiveWarp),
-        OBJECT(/*model*/ MODEL_NONE, /*pos*/ 4890, 857, 4255, /*angle*/ 0,   0, 0, /*bhvParam*/ BPARAM1(5) | BPARAM2(WARP_NODE_0C), /*bhv*/ bhvWarp),
+        OBJECT(/*model*/ MODEL_NONE, /*pos*/ 4506, 857, 4373, /*angle*/ 0, -90, 0, /*bhvParam*/ BPARAM2(WARP_NODE_0A), /*bhv*/ bhvInstantActiveWarp),
+        OBJECT(/*model*/ MODEL_NONE, /*pos*/ 4730, 857, 4373, /*angle*/ 0,   0, 0, /*bhvParam*/ BPARAM1(5) | BPARAM2(WARP_NODE_0C), /*bhv*/ bhvWarp),
         WARP_NODE(/*id*/ WARP_NODE_0A,      /*destLevel*/ LEVEL_THI,    /*destArea*/ 2, /*destNode*/ WARP_NODE_0A, /*flags*/ WARP_NO_CHECKPOINT),
         WARP_NODE(/*id*/ WARP_NODE_0B,      /*destLevel*/ LEVEL_THI,    /*destArea*/ 2, /*destNode*/ WARP_NODE_0B, /*flags*/ WARP_NO_CHECKPOINT),
         WARP_NODE(/*id*/ WARP_NODE_0C,      /*destLevel*/ LEVEL_THI,    /*destArea*/ 1, /*destNode*/ WARP_NODE_0B, /*flags*/ WARP_NO_CHECKPOINT),
